@@ -11,7 +11,8 @@ function AppointmentForm({
   setSelectedDoctor,
   bookAppointment,
   appointmentTime,
-  setAppointmentTime
+  setAppointmentTime,
+  timeSlots,
 }) {
   return (
     <div>
@@ -29,7 +30,20 @@ function AppointmentForm({
           ))}
         </select>
 
-        <input type="text" placeholder="Preferred Time (Example: 10:00 AM)" value={appointmentTime} onChange={(e) => setAppointmentTime(e.target.value)} />
+        <select
+          value={appointmentTime}
+          onChange={(e) => setAppointmentTime(e.target.value)}
+        >
+          <option value="">
+            Select Preferred Time
+          </option>
+
+          {timeSlots.map((time) => (
+            <option key={time} value={time}>
+              {time}
+            </option>
+          ))}
+        </select>
 
         <select value={selectedDoctor.id} onChange={(e) => {
           const doctor = doctors.find((doc) => doc.id === e.target.value);
