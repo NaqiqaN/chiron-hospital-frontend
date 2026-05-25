@@ -1,0 +1,101 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f8fb;
+}
+
+.app-container {
+  max-width: 850px;
+  margin: 30px auto;
+  padding: 25px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h1 {
+  color: #1565c0;
+  font-size: 42px;
+  margin-bottom: 5px;
+}
+
+h2 {
+  color: #333;
+}
+
+.form-box {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  max-width: 600px;
+  margin: 0 auto 25px auto;
+}
+
+input,
+select {
+  padding: 10px;
+  font-size: 15px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+}
+
+button {
+  grid-column: span 2;
+  padding: 10px;
+  background-color: #1565c0;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0d47a1;
+}
+
+.appointment-card {
+  background-color: #eef5ff;
+  margin: 12px auto;
+  padding: 12px;
+  max-width: 500px;
+  border-radius: 8px;
+}
+
+.table-section {
+  margin-top: 25px;
+  overflow-x: auto;
+}
+
+.appointment-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.appointment-table th {
+  background-color: #1565c0;
+  color: white;
+  padding: 12px;
+}
+
+.appointment-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.appointment-table tr:nth-child(even) {
+  background-color: #f4f8fb;
+}
+
+.discharge-btn {
+  background-color: #c62828;
+  padding: 7px 12px;
+  font-size: 13px;
+}
+
+.discharge-btn:hover {
+  background-color: #8e0000;
+}
