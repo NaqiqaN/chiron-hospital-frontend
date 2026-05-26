@@ -1,28 +1,23 @@
 import { useEffect, useState } from "react";
 import AppointmentList from "./components/AppointmentList";
 import AppointmentForm from "./components/AppointmentForm";
-import "./App.css";
 import DashboardStats from "./components/DashboardStats";
 import SlotTable from "./components/SlotTable";
+import "./App.css";
+
 const doctors = [
-  { id: "D01", name: "Sharma", specialization: "Cardiology" },
-  { id: "D02", name: "Mehta", specialization: "Neurology" },
-  { id: "D03", name: "Iyer", specialization: "Orthopedic" },
-  { id: "D04", name: "Khan", specialization: "Gynecology" },
-  { id: "D05", name: "Das", specialization: "Psychiatry" },
-  { id: "D06", name: "Patel", specialization: "Pediatrics" }
+  { id: "D01", name: "Sharma", specialization: "Cardiology", feePerHour: 500 },
+  { id: "D02", name: "Mehta", specialization: "Neurology", feePerHour: 600 },
+  { id: "D03", name: "Iyer", specialization: "Orthopedic", feePerHour: 450 },
+  { id: "D04", name: "Khan", specialization: "Gynecology", feePerHour: 550 },
+  { id: "D05", name: "Das", specialization: "Psychiatry", feePerHour: 400 },
+  { id: "D06", name: "Patel", specialization: "Pediatrics", feePerHour: 350 },
+  { id: "D07", name: "Rao", specialization: "General Physician", feePerHour: 250 }
 ];
 
 const conditions = [
-  "Fever",
-  "Cough",
-  "Asthma",
-  "Anxiety",
-  "Insomnia",
-  "Arthritis",
-  "PCOS",
-  "Hypoglycemia",
-  "Osteoporosis"
+  "Fever", "Cough", "Asthma", "Anxiety", "Insomnia",
+  "Arthritis", "PCOS", "Hypoglycemia", "Osteoporosis"
 ];
 
 const timeSlots = [
@@ -33,29 +28,27 @@ const timeSlots = [
 ];
 
 function App() {
-
   const [appointments, setAppointments] = useState([]);
   const [patientId, setPatientId] = useState("");
   const [patientName, setPatientName] = useState("");
   const [selectedDoctor, setSelectedDoctor] = useState(doctors[0]);
   const [diagnosis, setDiagnosis] = useState("");
   const [appointmentTime, setAppointmentTime] = useState("");
+  const [latestBill, setLatestBill] = useState("");
 
   useEffect(() => {
     fetchAppointments();
   }, []);
 
   function fetchAppointments() {
-
     fetch("https://hospital-management-system-98vl.onrender.com/hospital/appointments")
       .then((response) => response.json())
       .then((data) => setAppointments(data));
   }
 
   function bookAppointment() {
-
-    if (!patientId || !patientName || !diagnosis || !appointmentTime) {
-      alert("Please fill all fields before booking.");
+    if (!patientId || !patientName || !appointmentTime) {
+      alert("Please fill Patient ID, Patient Name, and Time before booking.");
       return;
     }
 
@@ -65,37 +58,29 @@ function App() {
       specialization: selectedDoctor.specialization,
       patientId: patientId,
       patientName: patientName,
-      diagnosis: diagnosis,
-      feePerHour: 200,
+      diagnosis: diagnosis || "General Consultation",
+      feePerHour: selectedDoctor.feePerHour,
       appointmentTime: appointmentTime
     };
 
     fetch("https://hospital-management-system-98vl.onrender.com/hospital/book", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(bookingData)
     })
       .then((response) => response.text())
       .then((data) => {
-
         alert(data);
-
         setPatientId("");
         setPatientName("");
         setDiagnosis("");
         setAppointmentTime("");
         setSelectedDoctor(doctors[0]);
-
         fetchAppointments();
       });
   }
 
   function dischargePatient(patientId) {
-
-    console.log("Discharging patient:", patientId);
-
     const hours = prompt("Enter hours admitted:");
 
     if (!hours) {
@@ -105,51 +90,75 @@ function App() {
     fetch(`https://hospital-management-system-98vl.onrender.com/hospital/discharge/${patientId}/${hours}`)
       .then((response) => response.text())
       .then((data) => {
-
-        console.log("Backend response:", data);
-
+        setLatestBill(data);
         alert(data);
-
         fetchAppointments();
       })
       .catch((error) => {
-
         console.log("Discharge error:", error);
-
         alert("Discharge failed");
       });
   }
 
+  function resetSystem() {
+    const confirmReset = confirm("This will delete all appointments and patient IDs. Continue?");
+
+    if (!confirmReset) {
+      return;
+    }
+
+    fetch("https://hospital-management-system-98vl.onrender.com/hospital/appointments/clear", {
+      method: "DELETE"
+    })
+      .then((response) => response.text())
+      .then((data) => {
+        alert(data);
+        setLatestBill("");
+        fetchAppointments();
+      });
+  }
+
   return (
-    <div className="app-container">
+    <div className="page-shell">
+      <div className="app-container">
+        <header className="hospital-header">
+          <div>
+            <p className="eyebrow">Care. Clarity. Coordination.</p>
+            <h1>Chiron Hospital</h1>
+            <p className="subtitle">Appointment scheduling and patient discharge dashboard</p>
+          </div>
+          <button className="reset-btn" onClick={resetSystem}>Reset System</button>
+        </header>
 
-      <h1>Chiron Hospital</h1>
-      <DashboardStats appointments={appointments} doctors={doctors} />
+        <DashboardStats appointments={appointments} doctors={doctors} />
 
-      <AppointmentForm
-        patientId={patientId}
-        setPatientId={setPatientId}
-        patientName={patientName}
-        setPatientName={setPatientName}
-        diagnosis={diagnosis}
-        setDiagnosis={setDiagnosis}
-        conditions={conditions}
-        doctors={doctors}
-        selectedDoctor={selectedDoctor}
-        setSelectedDoctor={setSelectedDoctor}
-        appointmentTime={appointmentTime}
-        setAppointmentTime={setAppointmentTime}
-        bookAppointment={bookAppointment}
-        timeSlots={timeSlots}
-      />
+        {latestBill && (
+          <div className="bill-box">
+            <h2>Latest Bill</h2>
+            <p>{latestBill}</p>
+          </div>
+        )}
 
-      <AppointmentList
-        appointments={appointments}
-        dischargePatient={dischargePatient}
-      />
+        <AppointmentForm
+          patientId={patientId}
+          setPatientId={setPatientId}
+          patientName={patientName}
+          setPatientName={setPatientName}
+          diagnosis={diagnosis}
+          setDiagnosis={setDiagnosis}
+          conditions={conditions}
+          doctors={doctors}
+          selectedDoctor={selectedDoctor}
+          setSelectedDoctor={setSelectedDoctor}
+          appointmentTime={appointmentTime}
+          setAppointmentTime={setAppointmentTime}
+          bookAppointment={bookAppointment}
+          timeSlots={timeSlots}
+        />
 
-      <SlotTable appointments={appointments} doctors={doctors} />
-
+        <AppointmentList appointments={appointments} dischargePatient={dischargePatient} />
+        <SlotTable appointments={appointments} doctors={doctors} />
+      </div>
     </div>
   );
 }
