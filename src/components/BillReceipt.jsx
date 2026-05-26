@@ -11,11 +11,11 @@ function BillReceipt({ bill, onClose }) {
       <div className="bill-modal">
         <div className="bill-topbar">
           <div>
-            <p className="bill-label">Patient Discharge Receipt</p>
+            <p className="bill-label">Patient Discharge Receipt </p>
             <h2>Chiron Hospital</h2>
-            <p className="bill-subtitle">Official patient discharge bill</p>
+            <p className="bill-subtitle">Official patient discharge bill </p>
           </div>
-          <button className="bill-close-btn" onClick={onClose}>×</button>
+          <button className="bill-close-btn " onClick={onClose}>×</button>
         </div>
 
         <div className="bill-meta-grid">
@@ -29,23 +29,23 @@ function BillReceipt({ bill, onClose }) {
           </div>
         </div>
 
-        <div className="bill-section-title">Patient Details</div>
+        <div className="bill-section-title">Patient Details </div>
         <div className="bill-grid">
-          <div><span>Patient ID</span><strong>{bill.patientId}</strong></div>
-          <div><span>Patient Name</span><strong>{bill.patientName}</strong></div>
-          <div><span>Diagnosis</span><strong>{bill.diagnosis}</strong></div>
-          <div><span>Appointment Time</span><strong>{bill.appointmentTime}</strong></div>
+          <div><span>Patient ID </span><strong>{bill.patientId}</strong></div>
+          <div><span>Patient Name </span><strong>{bill.patientName}</strong></div>
+          <div><span>Diagnosis </span><strong>{bill.diagnosis}</strong></div>
+          <div><span>Appointment Time </span><strong>{bill.appointmentTime}</strong></div>
         </div>
 
-        <div className="bill-section-title">Doctor & Charges</div>
+        <div className="bill-section-title">Doctor & Charges </div>
         <table className="bill-charge-table">
           <thead>
             <tr>
-              <th>Doctor</th>
-              <th>Specialization</th>
-              <th>Hours</th>
-              <th>Fee / Hour</th>
-              <th>Total</th>
+              <th>Doctor </th>
+              <th>Specialization </th>
+              <th>Hours </th>
+              <th>Fee / Hour </th>
+              <th>Total </th>
             </tr>
           </thead>
           <tbody>
@@ -60,12 +60,12 @@ function BillReceipt({ bill, onClose }) {
         </table>
 
         <div className="bill-total-row">
-          <span>Grand Total</span>
+          <span>Grand Total </span>
           <strong>Rs. {totalAmount}</strong>
         </div>
 
         <div className="bill-footer">
-          <p>Thank you for choosing Chiron Hospital.</p>
+          <p>Thank you for choosing Chiron Hospital. </p>
           <button className="bill-action-btn" onClick={onClose}>Close Receipt</button>
         </div>
       </div>
