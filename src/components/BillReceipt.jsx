@@ -15,16 +15,15 @@ function BillReceipt({ bill, onClose }) {
             <h2>Chiron Hospital</h2>
             <p className="bill-subtitle">Official patient discharge bill </p>
           </div>
-          <button className="bill-close-btn " onClick={onClose}>×</button>
         </div>
 
         <div className="bill-meta-grid">
           <div>
-            <span>Bill No.</span>
-            <strong>CH-{bill.patientId}-{bill.appointmentNumber}</strong>
+            <span>Bill No. </span>
+            <strong>CH- {bill.patientId}-{bill.appointmentNumber}</strong>
           </div>
           <div>
-            <span>Bill Date</span>
+            <span>Bill Date </span>
             <strong>{billDate}</strong>
           </div>
         </div>
