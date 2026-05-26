@@ -5,9 +5,10 @@ body {
 }
 
 .app-container {
-  max-width: 850px;
+  width: 95%;
+  max-width: 1300px;
   margin: 30px auto;
-  padding: 25px;
+  padding: 30px;
   background: white;
   border-radius: 12px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
@@ -26,14 +27,16 @@ h2 {
 
 .form-box {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 15px;
-  max-width: 600px;
+  width: 100%;
   margin: 0 auto 25px auto;
 }
 
 input,
 select {
+  width: 100%;
+  box-sizing: border-box;
   padding: 10px;
   font-size: 15px;
   border: 1px solid #aaa;
@@ -41,7 +44,7 @@ select {
 }
 
 button {
-  grid-column: span 2;
+  grid-column: span 3;
   padding: 10px;
   background-color: #1565c0;
   color: white;
@@ -98,4 +101,65 @@ button:hover {
 
 .discharge-btn:hover {
   background-color: #8e0000;
+}
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin: 20px 0 35px 0;
+}
+
+.stat-card {
+  background: #eef5ff;
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid #d8e8ff;
+  box-shadow: 0 4px 12px rgba(21, 101, 192, 0.12);
+}
+
+.stat-card h3 {
+  margin: 0;
+  font-size: 30px;
+  color: #1565c0;
+}
+
+.stat-card p {
+  margin: 8px 0 0 0;
+  font-size: 15px;
+  color: #555;
+}
+
+.slot-section {
+  margin-top: 35px;
+  overflow-x: auto;
+}
+
+.slot-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.slot-table th {
+  background-color: #0d47a1;
+  color: white;
+  padding: 12px;
+}
+
+.slot-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.free-slot {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.booked-slot {
+  background-color: #ffebee;
+  color: #c62828;
+  font-weight: bold;
 }

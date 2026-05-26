@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import AppointmentList from "./components/AppointmentList";
 import AppointmentForm from "./components/AppointmentForm";
 import "./App.css";
-
+import DashboardStats from "./components/DashboardStats";
+import SlotTable from "./components/SlotTable";
 const doctors = [
   { id: "D01", name: "Sharma", specialization: "Cardiology" },
   { id: "D02", name: "Mehta", specialization: "Neurology" },
@@ -123,6 +124,7 @@ function App() {
     <div className="app-container">
 
       <h1>Chiron Hospital</h1>
+      <DashboardStats appointments={appointments} doctors={doctors} />
 
       <AppointmentForm
         patientId={patientId}
@@ -145,6 +147,8 @@ function App() {
         appointments={appointments}
         dischargePatient={dischargePatient}
       />
+
+      <SlotTable appointments={appointments} doctors={doctors} />
 
     </div>
   );
