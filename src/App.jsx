@@ -138,7 +138,6 @@ function App() {
         <header className="hospital-header">
           <div>
             <h1>Chiron Hospital</h1>
-            <p className="subtitle">Patient Appointments & Discharge Management</p>
           </div>
           <button className="reset-btn" onClick={resetSystem}>Reset System</button>
         </header>
