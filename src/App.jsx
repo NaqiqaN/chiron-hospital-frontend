@@ -3,6 +3,7 @@ import AppointmentList from "./components/AppointmentList";
 import AppointmentForm from "./components/AppointmentForm";
 import DashboardStats from "./components/DashboardStats";
 import SlotTable from "./components/SlotTable";
+import BillReceipt from "./components/BillReceipt";
 import "./App.css";
 
 const doctors = [
@@ -34,7 +35,7 @@ function App() {
   const [selectedDoctor, setSelectedDoctor] = useState(doctors[0]);
   const [diagnosis, setDiagnosis] = useState("");
   const [appointmentTime, setAppointmentTime] = useState("");
-  const [latestBill, setLatestBill] = useState("");
+  const [latestBill, setLatestBill] = useState(null);
 
   useEffect(() => {
     fetchAppointments();
@@ -81,17 +82,32 @@ function App() {
   }
 
   function dischargePatient(patientId) {
+    const appointment = appointments.find(
+      (apt) => apt.patient.id === patientId
+    );
+
     const hours = prompt("Enter hours admitted:");
 
-    if (!hours) {
+    if (!hours || !appointment) {
       return;
     }
 
     fetch(`https://hospital-management-system-98vl.onrender.com/hospital/discharge/${patientId}/${hours}`)
       .then((response) => response.text())
-      .then((data) => {
-        setLatestBill(data);
-        alert(data);
+      .then(() => {
+
+        setLatestBill({
+          patientId: appointment.patient.id,
+          patientName: appointment.patient.name,
+          diagnosis: appointment.patient.diagnosis,
+          doctorName: appointment.doctor.name,
+          specialization: appointment.doctor.specialization,
+          appointmentTime: appointment.appointmentTime,
+          feePerHour: appointment.patient.feePerHour,
+          hours: hours,
+          appointmentNumber: appointment.appointmentNumber
+        });
+
         fetchAppointments();
       })
       .catch((error) => {
@@ -111,9 +127,8 @@ function App() {
       method: "DELETE"
     })
       .then((response) => response.text())
-      .then((data) => {
-        alert(data);
-        setLatestBill("");
+      .then(() => {
+        setLatestBill(null);
         fetchAppointments();
       });
   }
@@ -132,12 +147,10 @@ function App() {
 
         <DashboardStats appointments={appointments} doctors={doctors} />
 
-        {latestBill && (
-          <div className="bill-box">
-            <h2>Latest Bill</h2>
-            <p>{latestBill}</p>
-          </div>
-        )}
+        <BillReceipt
+          bill={latestBill}
+          onClose={() => setLatestBill(null)}
+        />
 
         <AppointmentForm
           patientId={patientId}
