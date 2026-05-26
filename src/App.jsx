@@ -95,7 +95,6 @@ function App() {
     fetch(`https://hospital-management-system-98vl.onrender.com/hospital/discharge/${patientId}/${hours}`)
       .then((response) => response.text())
       .then(() => {
-
         setLatestBill({
           patientId: appointment.patient.id,
           patientName: appointment.patient.name,
@@ -138,9 +137,8 @@ function App() {
       <div className="app-container">
         <header className="hospital-header">
           <div>
-            <p className="eyebrow">Care. Clarity. Coordination.</p>
             <h1>Chiron Hospital</h1>
-            <p className="subtitle">Appointment scheduling and patient discharge dashboard</p>
+            <p className="subtitle">Patient Appointments & Discharge Management</p>
           </div>
           <button className="reset-btn" onClick={resetSystem}>Reset System</button>
         </header>
